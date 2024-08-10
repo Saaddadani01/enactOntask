@@ -94,7 +94,7 @@ export async function updateProduct(id : number, product :UpdateProducts  ){
       discount: product.discount,
       rating: product.rating,
       colors: product.colors,
-      brands : brandsJson,
+      brands,
       gender: product.gender,
       occasion: product.occasion,
       image_url: product.image_url

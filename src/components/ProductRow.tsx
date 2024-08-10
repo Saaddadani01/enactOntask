@@ -50,11 +50,15 @@ function ProductRow({
           </div>
         </td>
         <td>
-          <div className="flex flex-col gap-2">
-            {[...new Set(JSON.parse(product.brands))].map((brandId, i) => {
-              return <span key={i}>{brandsMap.get(brandId)}</span>;
-            })}
-          </div>
+        <div className="flex flex-col gap-2">
+  {(() => {
+    const brandIds = (product.brands as string).split(',').map(id => parseInt(id, 10)).filter((id, index, self) => self.indexOf(id) === index);
+    return brandIds.map((brandId, i) => (
+      <span key={i}>{brandsMap.get(brandId)}</span>
+    ));
+  })()}
+</div>
+
         </td>
         <td>
           <div className="flex flex-col">

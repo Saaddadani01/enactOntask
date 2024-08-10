@@ -10,13 +10,16 @@ async function ProductTable({ products, numOfResultsOnCurPage }) {
     return <Empty />;
   }
 
-  const brandsArr = new Set();
-  for (let i = 0; i < products.length; i++) {
-    const productBrands = JSON.parse(products.at(i)?.brands as string);
-    productBrands?.forEach((productBrand) => {
-      brandsArr.add(productBrand);
-    });
-  }
+  const brandsArr = new Set<number>();
+
+  products
+  .map(product => (product?.brands as string).split(',').map(id => parseInt(id, 10)))
+  .flat()          // Flatten the array of arrays into a single array
+  .filter(id => !isNaN(id))  // Remove any NaN values
+  .forEach(brandId => brandsArr.add(brandId)); // Add each brand ID to the Set
+
+// Convert Set to Array if needed
+const uniqueBrandIds = Array.from(brandsArr);
 
   const brandsId = [...brandsArr];
   const brandsMap = await MapBrandIdsToName(brandsId);
